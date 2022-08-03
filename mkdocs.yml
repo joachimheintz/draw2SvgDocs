@@ -1,4 +1,5 @@
 site_name: draw2Svg Manual
 nav:
   - Home: index.md
+  - Using draw2Svg: using.md
 theme: readthedocs
