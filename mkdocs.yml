@@ -2,4 +2,5 @@ site_name: draw2Svg Manual
 nav:
   - Home: index.md
   - Using draw2Svg: using.md
+  - Quick Reference: quickref.md
 theme: readthedocs
