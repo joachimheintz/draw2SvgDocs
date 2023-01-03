@@ -26,12 +26,15 @@ d = dw.Drawing(400, 300, idPrefix='pic')
 ### One Line
 
 ```
-dw.Line(sx, sy, dx, ey, **kwargs)
+dw.Line(sx, sy, ex, ey, **kwargs)
 ```
+
 ```python
 line = dw.Line(30,30,90,90,stroke='black')
 d.append(line)
 ```
+![svg](img/01_line.svg)
+
 
 ### Multiple Lines
 
@@ -43,8 +46,10 @@ dw.Lines(sx, sy, *points, close=False, **kwargs)
 ```
 
 ```python
-lines = dw.Lines(15,10,55,10,45,20,5,20,fill='none',stroke='black')
+lines = dw.Lines(10,90,10,10,80,90,80,10,fill='none',stroke='black')
 ```
+![svg](img/01_multilines.svg)
+
 
 ```python
 x = [30+x*10 for x in range(20)]
@@ -52,6 +57,8 @@ y = [80,20]*10
 xy = [item for sublist in zip(x,y) for item in sublist]
 d.append(dw.Lines(*xy,stroke='black',stroke_width=5,fill='none'))
 ```
+![svg](img/01_multilines2.svg)
+
 
 ### Polygon
 
@@ -62,6 +69,7 @@ polygon = dw.Lines(15,10,55,10,45,20,5,20,fill='red',stroke='black',close='true'
 star = dw.Lines(48,16, 16,96, 96,48, 0,48, 88,96,
          stroke='black',fill='none',close='true')
 ```
+![svg](img/01_polygon.svg)
 
 
 ### Rectangle
@@ -69,6 +77,7 @@ star = dw.Lines(48,16, 16,96, 96,48, 0,48, 88,96,
 ```
 dw.Rectangle(x, y, width, height, **kwargs)
 ```
+
 ```python
 # black interior, no outline
 d.append(dw.Rectangle(10,10,90,150))
@@ -81,6 +90,8 @@ d.append(dw.Rectangle(210,10,75,90,fill='#0000ff',stroke='red',
 d.append(dw.Rectangle(300,10,105,60,fill='yellow',fill_opacity=0.5,
                       stroke='green',stroke_width=2,stroke_dasharray='5,2'))
 ```
+![svg](img/01_rect.svg)
+
 
 Rounded corners:
 
@@ -94,9 +105,11 @@ d.append(dw.Rectangle(210,10,80,180,rx='40',stroke='black',fill='none'))
 d.append(dw.Rectangle(310,10,80,180,rx='30',ry='10',stroke='black',fill='none'))
 d.append(dw.Rectangle(410,10,80,180,rx='10',ry='30',stroke='black',fill='none'))
 ```
+![svg](img/01_rectround.svg)
 
 
 ### Circle
+
 ```
 dw.Circle(cx, cy, r, **kwargs)
 ```
@@ -107,9 +120,11 @@ d.append(dw.Circle(50,50,40))
 d.append(dw.Circle(150,50,40,stroke='black',fill='none'))
 d.append(dw.Circle(250,50,40,stroke='black',fill='none',stroke_width=15))
 ```
+![svg](img/01_circ.svg)
 
 
 ### Ellipse
+
 ```
 dw.Ellipse(cx, cy, rx, ry, **kwarg)
 ```
@@ -120,6 +135,7 @@ d.append(dw.Ellipse(350,50,50,30))
 d.append(dw.Ellipse(460,50,50,30,stroke='black',fill='none'))
 d.append(dw.Ellipse(550,50,30,45,stroke='black',fill='none'))
 ```
+![svg](img/01_ellip.svg)
 
 
 ### Pie
@@ -127,10 +143,16 @@ d.append(dw.Ellipse(550,50,30,45,stroke='black',fill='none'))
 ```
 dw.Pie(cx, cy, r, startDeg, endDeg, **kwargs)
 ```
+startDeg,endDeg = start and end angle in degree (0 = east)
+
+(Note that degrees are here counterclockwise, so 90 is north.)
 
 ```python
-pie = draw.Pie(cx=200, cy=150, r=100, startDeg=0, endDeg=90, fill= "None", stroke="pink")
+pie = dw.Pie(cx=100,cy=100,r=80,startDeg=0,endDeg=90,fill= "None",
+             stroke="pink",stroke_width=3)
 ```
+![svg](img/01_pie.svg)
+
 
 
 ## Color and Painting Properties
@@ -151,6 +173,8 @@ for i in range(5):
     y = (i+1)*10
     d.append(dw.Line(10,y,80,y,stroke=c[i],stroke_width=5))
 ```
+![svg](img/02_fsc.svg)
+
 
 ### fill_opacity and stroke_opacity 
 
@@ -159,20 +183,23 @@ for i in range(5):
 ```python
 for i in range(5):
     y = (i+1)*10
-    d.append(dw.Line(10,y,80,y,stroke='black',stroke_width=5,stroke_opacity=i/5+0.2))
+    d.append(dw.Line(0,y,290,y,stroke='black',stroke_width=5,stroke_opacity=i/5+0.1))
+    d.append(dw.Rectangle(i*60,70,50,50,fill='red',fill_opacity=i/5+0.1))
 ```
+![svg](img/02_foso.svg)
 
 
 ### stroke_dasharray
 
 ```python
 # nine-pixel dash, five-pixel gap
-d.append(dw.Line(10,40,100,40,stroke_dasharray='9,5',stroke='black',stroke_width=2))
+d.append(dw.Line(10,30,100,30,stroke_dasharray='9,5',stroke='black',stroke_width=2))
 # five-pixel dash, three-pixel gap, nine-pixel dash, two-pixel gap
-d.append(dw.Line(10,30,100,30,stroke_dasharray='5,3,9,2',stroke='black',stroke_width=2))
+d.append(dw.Line(10,20,100,20,stroke_dasharray='5,3,9,2',stroke='black',stroke_width=2))
 # Odd number of entries is duplicated
-d.append(dw.Line(10,20,100,20,stroke_dasharray='9,3,5',stroke='black',stroke_width=2))
+d.append(dw.Line(10,10,100,10,stroke_dasharray='9,3,5',stroke='black',stroke_width=2))
 ```
+![svg](img/02_dash.svg)
 
 
 ### stroke_width
@@ -181,6 +208,8 @@ d.append(dw.Line(10,20,100,20,stroke_dasharray='9,3,5',stroke='black',stroke_wid
 for i in range(20):
     d.append(dw.Line((i+1)*15,10,(i+1)*15,90,stroke='black',stroke_width=abs(10-i)+1))
 ```
+![svg](img/02_strokewdth.svg)
+
 
 ### stroke_linecap
 
@@ -195,6 +224,7 @@ d.append(dw.Line(10,75,50,75,stroke='black',stroke_linecap='square',stroke_width
 d.append(dw.Lines(10,0,10,100,stroke='#999'))
 d.append(dw.Lines(50,0,50,100,stroke='#999'))
 ```
+![svg](img/02_linecap.svg)
 
 
 ### stroke_linejoin
@@ -210,6 +240,8 @@ g.append(dw.Lines(110,80,150,20,190,80,stroke_linejoin='round'))
 g.append(dw.Lines(210,80,250,20,290,80,stroke_linejoin='bevel'))
 d.append(g)
 ```
+![svg](img/02_join.svg)
+
 
 ### stroke_miterlimit
 
@@ -228,6 +260,7 @@ g.append(dw.Lines(100,90,130,30,160,90,stroke_miterlimit=2.3)) #jumps between 2.
 g.append(dw.Lines(190,90,220,30,250,90,stroke_miterlimit=1))
 d.append(g)
 ```
+![svg](img/02_mlimit.svg)
 
 
 ## Path
@@ -680,7 +713,8 @@ d.append(c)
 
 Another example:
 
-```# draw a random path in the left half of the canvas
+```
+# draw a random path in the left half of the canvas
 p = dw.Path(stroke='black',stroke_width=2,fill='none')
 p.M(150,150)
 from random import randint
@@ -1079,6 +1113,7 @@ d.append(dw.Lines(40,40,100,40,70,70,40,70,fill='gray',stroke='black'))
 ```
 
 ## Issues and Questions
+- How to get `:` working? For instance `baseline-shift: "sub"`?
 
 
 ## TODO
