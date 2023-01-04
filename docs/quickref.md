@@ -278,6 +278,7 @@ p = dw.Path()
 p.M(100,100).L(200,100).L(200,200).Z
 ```
 
+
 ### M = moveto
 
 ```
@@ -310,6 +311,8 @@ p.M(40,60).L(10,60).L(40,42)
 p.M(60,60).L(90,60).L(60,42)
 g.append(p)
 ```
+![svg](img/03_pL.svg)
+
 
 ### H = horizontal line
 
@@ -329,16 +332,11 @@ path.V(x)
 Draw a vertical line to the new `y` location.
 
 ```python
-g = dw.Group(stroke='black',fill='none')
-
-p = dw.Path()
-p.M(10,10).H(100)
-g.append(p)
-
-p = dw.Path()
-p.M(10,20).H(100).V(50)
-g.append(p)
+p = dw.Path(stroke='black',fill='none')
+d.append(p.M(10,10).H(100))
+d.append(p.M(10,20).H(100).V(50))
 ```
+![svg](img/03_pHV.svg)
 
 
 ### Q = quadratic Bézier curve (one control point)
@@ -369,6 +367,7 @@ g.append(dw.Line(435,52.5,570,75))
 g.append(dw.Circle(502.5,63.75,4,fill='none'))
 d.append(g)
 ```
+![svg](img/03_pQ.svg)
 
 
 ### T = smooth quadratic Bézier curve (generated control point)
@@ -381,7 +380,8 @@ Draws a quadratic Bézier curve from the current point to (x,y). The control
 point is assumed to be the reflection of the control point on the previous 
 command relative to the current point. (If there is no previous command or if 
 the previous command was not a Q, q, T or t, assume the control point is 
-coincident with the current point.) (From [W3C Doc](https://www.w3.org/TR/SVG11/paths.html#PathDataQuadraticBezierCommands))
+coincident with the current point.) 
+(From [W3C Doc](https://www.w3.org/TR/SVG11/paths.html#PathDataQuadraticBezierCommands))
 
 ```python
 # sequence left
@@ -391,6 +391,7 @@ d.append(p.M(30,60).Q(80,-10,100,60).Q(130,25,200,40))
 p = dw.Path(stroke='black',fill='none',stroke_width=3,transform='translate(200,0)')
 d.append(p.M(30,60).Q(80,-10,100,60).T(200,40))
 ```
+![svg](img/03_pT.svg)
 
 
 ### C = cubic Bézier curve (two control points)
@@ -423,6 +424,7 @@ for i in range(6):
     g.append(dw.Line(*pnt_2,*ctl_2))
     d.append(g)
 ```
+![svg](img/03_pC.svg)
 
 
 ### S = smooth cubic Bézier (one control point)
@@ -453,6 +455,7 @@ for pnt,ctl in zip((pnt_1,pnt_2,pnt_3),(ctl_1,ctl_2,ctl_3)):
     d.append(dw.Circle(*ctl,2,stroke='gray',fill='gray'))
     d.append(dw.Line(*pnt,*ctl,stroke='gray'))
 ```
+![svg](img/03_pS.svg)
 
   
 ### A = elliptical Arc
@@ -476,13 +479,13 @@ d.append(p.M(125,75).A(100,50,rot=0,largeArc=1,sweep=0,ex=225,ey=125))
 p = dw.Path(stroke='rgb(255 80 0)',stroke_dasharray='5 3')
 d.append(p.M(125,75).A(100,50,rot=0,largeArc=1,sweep=1,ex=225,ey=125))
 ```
-
+![svg](img/03_pA.svg)
 
 
 ### Z = closepath  
 
 ```
-path = Z()
+path.Z()
 ```
 
 Close the path.
@@ -492,6 +495,7 @@ p = dw.Path(stroke='black',fill='none')
 d.append(p.M(10,10).h(30).v(50).h(-30).Z())
 d.append(p.M(50,10).h(30).v(50).Z())
 ```
+![svg](img/03_pZ.svg)
 
 
 
@@ -523,6 +527,8 @@ d.append(dw.Text('Outlined only',x=20,y=240,fontSize=50,stroke='black',stroke_wi
 d.append(dw.Text('Outlined and colored',x=20,y=300,fontSize=50,stroke='black',fill='red'))
 d.append(dw.Text('Colored fill only',x=20,y=360,fontSize=50,fill='blue'))
 ```
+![svg](img/04_fill.svg)
+
 
 ### Weight, Style, Decoration, Spacing
 
@@ -538,6 +544,8 @@ d.append(dw.Text('less word space',fontSize=30,x=200,y=115,word_spacing=-5))
 d.append(dw.Text('wide letter space',fontSize=30,x=200,y=155,letter_spacing=8))
 d.append(dw.Text('narrow letter space',fontSize=30,x=200,y=195,letter_spacing=-2))
 ```
+![svg](img/04_weight.svg)
+
 
 ### Text Alignment
 
@@ -557,6 +565,8 @@ d.append(dw.Text('Bottom',24,150,30,valign='bottom'))
 d.append(dw.Text('Middle',24,150,60,valign='middle'))
 d.append(dw.Text('Top',24,150,90,valign='top'))
 ```
+![svg](img/04_align.svg)
+
 
 ### TSpan
 
@@ -570,6 +580,8 @@ txt.append(dw.TSpan('bold',font_weight='bold'))
 txt.append(dw.TSpan(' text.'))
 d.append(txt)
 ```
+![svg](img/04_tspan.svg)
+
 
 ```python
 txt = dw.Text('F',24,10,30)
@@ -578,12 +590,15 @@ txt.append(dw.TSpan('l',dy=31,dx=21))
 txt.append(dw.TSpan('l',dy=89,dx=54))
 d.append(txt)
 ```
+![svg](img/04_tspan2.svg)
 
 The same could be achieved by a list of dx/dy values:
 
 ```python
 d.append(dw.Text('Fall',24,10,30,dx='0,0,21,54',dy='0,5,21,54'))
 ```
+![svg](img/04_tspan3.svg)
+
 
 ### Rotate
 
@@ -594,8 +609,10 @@ If the list is smaller than the number of characters, the last angle persists.
 d.append(dw.Text('Rotate',20,20,20,letter_spacing=20,rotate='90'))
 d.append(dw.Text('Rotate',20,20,80,letter_spacing=20,rotate='0 90 180 270'))
 ```
+![svg](img/04_rot.svg)
 
-TSpan can also be used:
+
+`TSpan` can also be used:
 
 ```python
 from random import randrange
@@ -605,6 +622,8 @@ txt.append(dw.TSpan('OT',rotate='50 20'))
 txt.append(dw.TSpan('ATE',rotate=''.join([str(randrange(360)) for i in range(3)])))
 d.append(txt)
 ```
+![svg](img/04_rot2.svg)
+
 
 ### Setting Text Length
 
@@ -618,14 +637,14 @@ d.append(dw.Text(s,20,20,190,textLength=80,lengthAdjust='spacingAndGlyphs'))
 
 d.append(dw.Line(20,10,20,195,stroke='gray'))
 d.append(dw.Line(270,80,270,10,stroke='gray'))
+d.append(dw.Line(100,130,100,195,stroke='gray'))
 ```
+![svg](img/04_len.svg)
 
 
 ### Text on a Path
 
 ```python
-d = dw.Drawing(500,200,idPrefix='textpath2')
-
 curve_path = dw.Path(stroke='gray',fill='none')
 curve_path.M(30,50).C(50,20,70,20,120,50).S(150,10,200,50)
 
@@ -659,6 +678,7 @@ d.append(t_sc)
 d.append(t_dc)
 d.append(t_ct)
 ```
+![svg](img/04_path.svg)
 
 
 ## Gradient, Clip, Mask
@@ -674,6 +694,8 @@ grad.addStop(0,'green')
 grad.addStop(1,'yellow')
 d.append(dw.Rectangle(10,10,150,60,stroke='black',fill=grad))
 ```
+![svg](img/05_lingrad.svg)
+
 
 ### Radial Gradient
 ```
@@ -688,6 +710,7 @@ gradient.addStop(1, 'red', 1)
 bg = dw.Rectangle(x=0,y=0,width="100%",height="100%",fill=gradient)
 d.append(bg)
 ```
+![svg](img/05_radgrad.svg)
 
 
 ### Clip
@@ -700,16 +723,16 @@ To add shape as Clip, use `.append()` method.
 To apply Clip, fill `clip_path` argument with `clip_name`.
 
 ```python
+# show both shapes as they are
+d.append(dw.Rectangle(100,100,100,100,stroke='gray',fill='none'))
+d.append(dw.Circle(100,100,100,fill='none',stroke='gray',stroke_dasharray='2,5'))
+# apply rect as clip to circle
 clip = dw.ClipPath()
-clip.append(dw.Rectangle(0,0,100,100))
-
-# Draw a cropped circle
-c = dw.Circle(100,100,100,
-                fill="cyan", clip_path=clip,
-                id='circle')
-
-d.append(c)
+clip.append(dw.Rectangle(100,100,100,100))
+d.append(dw.Circle(100,100,100,fill="cyan",clip_path=clip))
 ```
+![svg](img/05_clip.svg)
+
 
 Another example:
 
@@ -730,6 +753,8 @@ c.append(circ)
 # repeat lines in the right half and apply clipping
 d.append(dw.Use(p,300,0,clip_path=c))
 ```
+![svg](img/05_clip2.svg)
+
 
 Complex clip path:
 
@@ -767,6 +792,7 @@ g.append(shapes)
 g.append(text1)
 d.append(g)
 ```
+![svg](img/05_clip3.svg)
 
 
 ### Mask
@@ -805,6 +831,8 @@ rect = dw.Rectangle(
         fill="pink", mask=mask)
 d.append(rect)
 ```
+![svg](img/05_mask.svg)
+
 
 Mask using opaque colors:
 
@@ -843,6 +871,8 @@ g.append(dw.Circle(215,115,25,fill='black'))
 g.append(dw.Text('White',14,215,80,text_anchor='middle'))
 d.append(g)
 ```
+![svg](img/05_mask2.svg)
+
 
 Mask alpha using opacity only:
 
@@ -873,6 +903,7 @@ g.append(dw.Circle(215,35,25))
 g.append(dw.Text('25%',14,215,80,text_anchor='middle'))
 d.append(g)
 ```
+![svg](img/05_mask3.svg)
 
 
 ## Group, Use, Defs, Image
@@ -905,6 +936,8 @@ g_woman.append(dw.Line(112,90,116,104))
 g_woman.append(dw.Lines(101,70, 110,76, 119,70))
 d.append(g_woman)
 ```
+![svg](img/06_group.svg)
+
 
 ### Use
 
@@ -924,22 +957,26 @@ d.append(dw.Use('house',100,50))
 # or use variable name
 d.append(dw.Use(g_house,150,20))
 ```
+![svg](img/06_use.svg)
+
 
 ### Defs
 
 Elements that are not `append`ed to the drawing but are referenced by other 
 elements will automatically be included in `<defs></defs>`.
-([source](https://github.com/cduck/drawSvg/issues/46)])
+([source](https://github.com/cduck/drawSvg/issues/46))
 
 ```python
+d = dw.Drawing(200,200,idPrefix='defs')
+
 # Do not append `bond` to the drawing
-bond = draw.Line(0, 0, 10, 10, stroke='black')
+bond = dw.Line(0, 0, 10, 10, stroke='black')
 
 # `bond` is automatically added into <defs>
 # A default `id` is generated if one isn't set
-d.append(draw.Use(bond, 20, 50))
-d.append(draw.Use(bond, 50, 50))
-d.append(draw.Use(bond, 80, 50))
+d.append(dw.Use(bond, 20, 50))
+d.append(dw.Use(bond, 50, 50))
+d.append(dw.Use(bond, 80, 50))
 
 print(d.asSvg())
 ```
@@ -947,23 +984,26 @@ print(d.asSvg())
 Output:
 ```
 <defs>
-<path d="M0,0 L10,-10" stroke="black" id="d0" />
+<path d="M0,0 L10,10" stroke="black" id="defs0" />
 </defs>
-<use xlink:href="#d0" x="20" y="-50" />
-<use xlink:href="#d0" x="50" y="-50" />
-<use xlink:href="#d0" x="80" y="-50" />
+<use xlink:href="#defs0" x="20" y="50" />
+<use xlink:href="#defs0" x="50" y="50" />
+<use xlink:href="#defs0" x="80" y="50" />
 ```
 
 
 ### Image
 
 ```
-x, y, width, height, path=None, data=None, embed=False, mimeType=None, **kwargs
+dw.Image(x, y, width, height, path=None, data=None, 
+		embed=False, mimeType=None, **kwargs)
 ```
 
 ```python
-d.append(dw.Image(0,0,200,200,'../example1.png'))
+d.append(dw.Image(0,0,200,200,'example1.png',embed=True))
 ```
+![svg](img/06_imag.svg)
+
 
 ## Transformations
 
@@ -979,6 +1019,7 @@ This can be added to many objects. Simple example:
 ```
 d.append(dw.Rectangle(0,0,40,40,transform='translate(50,50)'))
 ```
+![svg](img/07_trans.svg)
 
 
 ### Scale
@@ -993,6 +1034,8 @@ Note that scaling touches also stroke width.
 square = dw.Rectangle(0,0,40,40,fill='none',stroke='black',stroke_width=2)
 d.append(dw.Use(square,10,10,transform='scale(2)'))
 ```
+![svg](img/07_scale.svg)
+
 
 It is possible to specify x and y scale seperately:
 
@@ -1001,6 +1044,8 @@ square = dw.Rectangle(0,0,40,40,fill='none',stroke='black',stroke_width=2)
 d.append(dw.Use(square,10,10))
 d.append(dw.Use(square,10,10,transform='scale(3,1.5)'))
 ```
+![svg](img/07_scale2.svg)
+
 
 Scaling around a center point:
 
@@ -1015,6 +1060,7 @@ d.append(dw.Use(rect,0,0,transform='translate(-100,-100) scale(2)',stroke_width=
 d.append(dw.Use(rect,0,0,transform='translate(-150,-150) scale(2.5)',stroke_width=0.4))
 d.append(dw.Use(rect,0,0,transform='translate(-200,-200) scale(3)',stroke_width=0.33))
 ```
+![svg](img/07_scalcent.svg)
 
 
 ### Rotate
@@ -1031,6 +1077,8 @@ d.append(dw.Rectangle(0,0,200,200,stroke='gray',fill='none'))
 d.append(dw.Rectangle(70,30,40,40,fill='gray'))
 d.append(dw.Rectangle(70,30,40,40,fill='black',transform='rotate(45)'))
 ```
+![svg](img/07_rota.svg)
+
 
 ```python
 # center of rotation
@@ -1045,6 +1093,8 @@ d.append(dw.Use(g,0,0,transform='rotate (60,100,100)'))
 d.append(dw.Use(g,0,0,transform='rotate (-90,100,100)'))
 d.append(dw.Use(g,0,0,transform='rotate (-150,100,100)'))
 ```
+![svg](img/07_rota2.svg)
+
 
 ### Skew
 
@@ -1053,6 +1103,7 @@ transform = 'skewX(angle)`
 transform = 'skewY(angle)`
 ```
 
+```python
 g = dw.Group(stroke='gray',stroke_dasharray='4 4')
 g.append(dw.Line(0,0,200,0))
 g.append(dw.Line(20,0,20,90))
@@ -1072,10 +1123,9 @@ i1.append(dw.Lines(50,0,0,0,0,50,stroke='black',fill='none',stroke_width=2))
 i1.append(dw.Text('skewY',16,0,60))
 i.append(i1)
 d.append(i)
+```
+![svg](img/07_skew.svg)
 
-
-
-## Tips
 
 ### Cartesian Coordinates
 
@@ -1091,6 +1141,8 @@ d.append(dw.Line(0,0,100,0,stroke='black'))
 d.append(dw.Line(0,0,0,100,stroke='black'))
 d.append(dw.Lines(40,40,100,40,70,70,40,70,fill='gray',stroke='black'))
 ```
+![svg](img/07_cart1.svg)
+
 
 Translated to (0,0) bottom left:
 
@@ -1102,6 +1154,7 @@ g.append(dw.Line(0,0,0,100,stroke='black'))
 g.append(dw.Lines(40,40,100,40,70,70,40,70,fill='gray',stroke='black'))
 d.append(g)
 ```
+![svg](img/07_cart2.svg)
 
 Or even applying `scale(1,-1)` to the whole drawing:
 
@@ -1111,15 +1164,15 @@ d.append(dw.Line(0,0,100,0,stroke='black'))
 d.append(dw.Line(0,0,0,100,stroke='black'))
 d.append(dw.Lines(40,40,100,40,70,70,40,70,fill='gray',stroke='black'))
 ```
-
-## Issues and Questions
-- How to get `:` working? For instance `baseline-shift: "sub"`?
-
-
-## TODO
-- Insert images for the example code  
-- How to know the possible `**kwargs` for the methods and also `**svgArgs` for dw.Drawing()
+![svg](img/07_cart3.svg)
 
 
 ## Credits
 Most examples are based on J. David Eisenberg, SVG Essentials, O'Reilly 2002.
+
+Thanks to [Ahmad Aufar Husaini](https://github.com/aufarah)
+ for his fork (draw2Svg) and for providing some documentation 
+ (some examples are used here).
+
+Thanks to [Casey Duckering](https://github.com/cduck) for drawSvg and many
+helpful explanations on its [discussion page](https://github.com/cduck/drawSvg/discussions).
