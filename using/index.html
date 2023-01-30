@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Using draw2Svg - draw2Svg Manual</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Using draw2Svg";
+        var mkdocs_page_input_path = "using.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> draw2Svg Manual
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Using draw2Svg</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#add-basic-drawing">Add Basic Drawing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#note-on-svg-tags">Note on SVG Tags</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#note-on-coordinate-system">Note on Coordinate system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rectangle">Rectangle</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#line-lines-and-polygon">Line, Lines and Polygon</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#circle">Circle</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ellipse">Ellipse</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#path">Path</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#path-datas-actually-commands">Path datas (actually commands)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pie-arc">Pie Arc</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../quickref/">Quick Reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">draw2Svg Manual</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Using draw2Svg</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="using-draw2svg">Using draw2Svg</h1>
+<h2 id="add-basic-drawing">Add Basic Drawing</h2>
+<p>New drawing can be added directly using <code>d.draw(ADD_COMMAND_HERE)</code>, or by creating new drawing first and append it to <code>draw</code> instance. Each drawing has basic arguments you need to define it first, but you can always add SVG tags as extra arguments (like fill, stroke, transformation, etc)</p>
+<pre><code>draw.element(basic_arguments, extras)
+</code></pre>
+<h6 id="note-on-svg-tags"><em>Note on SVG Tags</em></h6>
+<p>Normal SVG tags use <code>kebab-case</code> for its name, which is forbidden in Python, instead you must rewrite it with <code>snake_case</code>. For example to define SVG tag <code>stroke-width</code>, you write as <code>stroke_width</code></p>
+<h6 id="note-on-coordinate-system"><em>Note on Coordinate system</em></h6>
+<p>This library use standard SVG coordinate system which differs from your usual cartesian in <code>y axis</code> direction which is inverted. The <code>y</code> value increases as we go down, not up. One main reason that this library is forked from original <code>drawSvg</code> is coordinate issue.</p>
+<h3 id="rectangle">Rectangle</h3>
+<pre><code class="language-python">#Rectangle initiation Arguments: x, y, width, height
+d.draw(draw.Rectangle(
+    x=0,y=0,
+    width=&quot;100%&quot;,height=&quot;100%&quot;,
+    fill='#ddd'))
+
+#You can make element first and append it later
+box = draw.Rectangle(
+    x=20,y=20,
+    width=80,height=80,
+    fill='pink')
+d.append(box)
+d
+</code></pre>
+<p><img alt="svg" src="../output_5_0.svg" /></p>
+<h3 id="line-lines-and-polygon">Line, Lines and Polygon</h3>
+<pre><code>draw.Lines(sx, sy, *points, close=False, **kwargs)
+</code></pre>
+<p>sx and sy point to line(s) origin</p>
+<pre><code class="language-python">d = draw.Drawing(400, 300)
+
+# Simple line
+p1 = [0,130]
+p2 = [100,130]
+line1 = draw.Lines(*p1,*p2, stroke=&quot;black&quot;, stroke_width=8)
+d.append(line1)
+
+# The Polyline
+p1 = [5,200]
+p2 = [100,200]
+p3 = [120,250]
+p4 = [10,270]
+line1 = draw.Lines(*p1,*p2,*p3,*p4, stroke=&quot;black&quot;, fill= &quot;blue&quot;, stroke_width=8)
+d.append(line1)
+
+# The Polygon (closed Polyline)
+p1 = [150,200]
+p2 = [250,200]
+p3 = [270,250]
+p4 = [155,270]
+line1 = draw.Lines(*p1,*p2,*p3,*p4, close=&quot;True&quot;, stroke=&quot;black&quot;, fill= &quot;pink&quot;, stroke_width=8)
+d.append(line1)
+d
+</code></pre>
+<p><img alt="svg" src="../output_7_0.svg" /></p>
+<h3 id="circle">Circle</h3>
+<pre><code>draw.Circle(cx, cy, r, **kwargs)
+</code></pre>
+<p>cx and cy point to circle's center, r refer to its radius</p>
+<pre><code class="language-python">d = draw.Drawing(400, 300)
+circle = draw.Circle(cx=200, cy=150, r=100,  fill= &quot;pink&quot;)
+d.append(circle)
+d
+</code></pre>
+<p><img alt="svg" src="../output_9_0.svg" /></p>
+<h3 id="ellipse">Ellipse</h3>
+<pre><code>draw.Ellipse(cx, cy, rx, ry, **kwarg)
+</code></pre>
+<p>(cx,cy) points to the center and (rx,ry) tells its radius</p>
+<pre><code class="language-python">d = draw.Drawing(400, 300)
+ellipse = draw.Ellipse(cx=200, cy=150, rx=150, ry=100,  fill= &quot;cyan&quot;)
+d.append(ellipse)
+d
+</code></pre>
+<p><img alt="svg" src="../output_11_0.svg" /></p>
+<h3 id="path">Path</h3>
+<p>To initiate a path, just call this one below. No need to fill any basic argument, but you can always add extras like SVG tags:</p>
+<pre><code>draw.Path(**kwargs)
+</code></pre>
+<h4 id="path-datas-actually-commands">Path datas (actually commands)</h4>
+<p>W3Schools dan MDN SVG guide has sufficient documentation on Path data</p>
+<blockquote>
+<p>The <code>&lt;path&gt;</code> element is used to define a path.  </p>
+<p>The following commands are available for path data:  </p>
+<p>M = moveto<br />
+L = lineto<br />
+H = horizontal lineto<br />
+V = vertical lineto<br />
+C = curveto<br />
+S = smooth curveto<br />
+Q = quadratic Bézier curve<br />
+T = smooth quadratic Bézier curveto<br />
+A = elliptical Arc<br />
+Z = closepath  </p>
+<p>Lowercase commands mean that their movements are relative to current location</p>
+</blockquote>
+<p>In draw2Svg, the commands are represented in form of methods. To use them here, you only need to initiate a path and call the method:</p>
+<pre><code class="language-python">d = draw.Drawing(400, 300)
+
+path = draw.Path(stroke= &quot;pink&quot;, fill=&quot;None&quot;, stroke_width=4)
+initPoint = [0,0]
+endPoint = [400,0]
+ctrlInit = [60,60]
+ctrlEnd = [400-60,60]
+path.M(*initPoint)
+path.C(*ctrlInit, *ctrlEnd, *endPoint)  # Draw a curve to (70, 20)
+d.append(path)
+
+path = draw.Path(stroke= &quot;pink&quot;, fill=&quot;cyan&quot;, stroke_width=4)
+initPoint = [0,80]
+endPoint = [400,80]
+ctrlInit = [60,140]
+ctrlEnd = [400-60,140]
+path.M(*initPoint)
+path.C(*ctrlInit, *ctrlEnd, *endPoint)  # Draw a curve to (70, 20)
+path.Z() # Close path
+d.append(path)
+d
+</code></pre>
+<p><img alt="svg" src="../output_14_0.svg" /></p>
+<h3 id="pie-arc">Pie Arc</h3>
+<pre><code>draw.Pie(cx, cy, r, startDeg, endDeg, **kwargs)
+</code></pre>
+<p>(cx,cy) point to arc's center, startDeg to its initial angle and endDeg to its final angle</p>
+<pre><code class="language-python">d = draw.Drawing(400, 300)
+pie = draw.Pie(cx=200, cy=150, r=100, startDeg=0, endDeg=90, fill= &quot;None&quot;, stroke=&quot;pink&quot;)
+d.append(pie)
+d
+</code></pre>
+<p><img alt="svg" src="../output_16_0.svg" /></p>
+<pre><code class="language-python">
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../quickref/" class="btn btn-neutral float-right" title="Quick Reference">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../quickref/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
