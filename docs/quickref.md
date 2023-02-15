@@ -680,6 +680,18 @@ d.append(t_ct)
 ```
 ![svg](img/04_path.svg)
 
+### Multi Line Text
+
+This is a particular feature of drawSvg: A list of strings as input for Text()
+is rendered as multi-line text.
+
+```python
+t = ['this is', 'a', 'multiline text', 'given as a', 'list']
+d.append(dw.Text(t,14,50,20,text_anchor='middle'))
+```
+
+![svg](img/04_multiline_text.svg)
+
 
 ## Gradient, Clip, Mask
 
